@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>植筋胶用量计算器</title>
+	<meta charset=utf-8>
+	<meta name="description" content="植筋胶用量计算器">
+	<meta name="author"      content="shduanjun@163.com">
+	<meta name="viewport"    content="width=device-width, initial-scale=1">
+	<link rel="stylesheet"   href="css/jquery.mobile-1.2.0.min.css" />
+	<script src="js/jquery.js"></script>
+	<script src="js/jquery.mobile-1.2.0.min.js"></script>
+
+	<style type="text/css">
+		.footer p {
+			text-align: center;
+		}
+		
+		.footer a:link {
+			color: #F5821F;
+			font-weight: bold;			
+		}
+
+		.footer a {
+			text-decoration: none;
+		}
+
+		#prompt p {
+			text-align: center;
+		}
+		#prompt li {
+			color: #F5821F;
+		}
+	</style>
+
+	<script type="text/javascript">
+
+		function myAlert(msg) {
+			console.log(msg);
+			$('#prompt').popup("open");
+		}
+
+		jQuery(document).ready(function($) {
+			
+			$('#submit').bind("click", function(event){
+				try 
+				{
+					$('.number').each(function(){
+ 						var current = $(this);
+ 						var num = parseFloat(current.val());
+ 						if (num < 0.1) {
+ 							myAlert("请输入正确数值！推荐：钻孔直径至少比钢筋直径大5mm，钻孔深度至少为15倍钢筋直径！");
+ 							throw "error";
+ 						};
+ 					}); 
+				} catch (err) {
+					event.preventDefault();
+					return;
+				}
+
+ 				var gjzj = parseFloat($('#gjzj').val())/2;
+ 				var zkzj = parseFloat($('#zkzj').val())/2;
+ 				var zksd = parseFloat($('#zksd').val());
+ 				var zjgs = parseInt($('#zjgs').val());
+
+ 				if (!gjzj || !zkzj || !zksd || !zjgs) {
+ 					myAlert("请输入正确数值！");
+ 					event.preventDefault();
+ 					return ;
+ 				}
+
+ 				if (zkzj < (gjzj+2)) {
+ 					myAlert("钻孔直径至少需要比钢筋直径大5mm！");
+ 					event.preventDefault();
+ 					return ;
+ 				};
+
+ 				if (zksd < (gjzj*14)) {
+ 					myAlert("钻孔深度至少为15倍钢筋直径！");
+ 					event.preventDefault();
+ 					return ;	
+ 				};
+
+ 				var result = Math.ceil(Math.PI*(Math.pow(zkzj/10, 2)-Math.pow(gjzj/10, 2))*zksd/10*1.15*zjgs);
+ 				$('#jszl').val(result);
+
+ 				var smallNum = Math.ceil(result/330);
+ 				var bigNum   = Math.ceil(result/500);
+				$('#330num').val(smallNum);
+				$('#500num').val(bigNum);
+
+				event.preventDefault();
+ 				return;
+			});
+
+			$('#reset').bind("click", function(event){
+				$('#prompt').popup();
+
+				$('.number').each(function(){
+					var zero = 0;
+ 					$(this).val(zero);
+ 				}); 
+ 				event.preventDefault();
+				return ;
+			});
+		});
+
+	</script>
+</head>
+
+<body>
+
+	<div data-role="page" data-theme="a">
+
+		<div data-role="header">
+			<h1>植筋胶用量计算器</h1>
+		</div>
+		<!-- /header -->
+
+		<div data-role="content">
+			<div data-role="fieldcontain">
+				<label for="gjzj">钢筋直径：(单位：毫米)</label>
+				<input type="text" name="gjzj" id="gjzj" class="number" value=""  />
+			</div>
+			<div data-role="fieldcontain">
+				<label for="zkzj">钻孔直径：(单位：毫米)</label>
+				<input type="text" name="zkzj" id="zkzj" class="number" value=""  />
+			</div>
+			<div data-role="fieldcontain">
+				<label for="zksd">钻孔深度：(单位：毫米)</label>
+				<input type="text" name="zksd" id="zksd" class="number" value=""  />
+			</div>
+			<div data-role="fieldcontain">
+				<label for="zjgs">植筋根数：(单位：根)</label>
+				<input type="text" name="zjgs" id="zjgs" class="number" value=""  />
+			</div>
+			<fieldset class="ui-grid-a">
+				<div class="ui-block-a">
+					<button type="reset"  id="reset"  data-theme="c">重置</button>
+				</div>
+				<div class="ui-block-b">
+					<button type="submit" id="submit" data-theme="a">计算</button>
+				</div>
+			</fieldset>
+			<p>计算结果如下：</p>
+			<div data-role="fieldcontain">
+				<label for="jszl">胶水总量：(单位：毫升)</label>
+				<input type="text" name="jszl" id="jszl" value=""  />
+			</div>
+			<div data-role="fieldcontain">
+				<label for="330num">330ML支数：(单位：支)</label>
+				<input type="text" name="330num" id="330num" value=""  />
+			</div>
+			<div data-role="fieldcontain">
+				<label for="500num">500ML支数：(单位：支)</label>
+				<input type="text" name="500num" id="500num" value=""  />
+			</div>
+
+			<div data-role="popup" id="prompt" class="ui-content">
+				<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+				<br>
+				<p>请输入正确数值!</p>
+				<ol>
+					<li>钻孔直径至少比钢筋直径大5mm</li>
+					<li>钻孔深度至少为15倍钢筋直径</li>
+				</ol>
+				<br>	
+			</div>
+
+		</div>
+		<!-- /content -->
+
+		<div data-role="footer" class="footer">
+			<p>植筋技术免费支持 | <a href="http://www.secoic.com/hilit/hilitms.htm">进口植筋胶代理</a> <br>
+				<span><a href="tel:4006018808">400-601-8808</a></span>
+			</p>
+		</div>
+
+	</div>
+	<!-- /page -->
+
+</body>
+</html>
