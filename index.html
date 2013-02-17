@@ -8,9 +8,6 @@
 	<meta name="author"      content="shduanjun@163.com">
 	<meta name="viewport"    content="width=device-width, initial-scale=1">
 	<link rel="stylesheet"   href="css/jquery.mobile-1.2.0.min.css" />
-	<script src="js/jquery.js"></script>
-	<script src="js/jquery.mobile-1.2.0.min.js"></script>
-
 	<style type="text/css">
 		.footer p {
 			text-align: center;
@@ -32,80 +29,6 @@
 			color: #F5821F;
 		}
 	</style>
-
-	<script type="text/javascript">
-
-		function myAlert(msg) {
-			console.log(msg);
-			$('#prompt').popup("open");
-		}
-
-		jQuery(document).ready(function($) {
-			
-			$('#submit').bind("click", function(event){
-				try 
-				{
-					$('.number').each(function(){
- 						var current = $(this);
- 						var num = parseFloat(current.val());
- 						if (num < 0.1) {
- 							myAlert("请输入正确数值！推荐：钻孔直径至少比钢筋直径大5mm，钻孔深度至少为15倍钢筋直径！");
- 							throw "error";
- 						};
- 					}); 
-				} catch (err) {
-					event.preventDefault();
-					return;
-				}
-
- 				var gjzj = parseFloat($('#gjzj').val())/2;
- 				var zkzj = parseFloat($('#zkzj').val())/2;
- 				var zksd = parseFloat($('#zksd').val());
- 				var zjgs = parseInt($('#zjgs').val());
-
- 				if (!gjzj || !zkzj || !zksd || !zjgs) {
- 					myAlert("请输入正确数值！");
- 					event.preventDefault();
- 					return ;
- 				}
-
- 				if (zkzj < (gjzj+2)) {
- 					myAlert("钻孔直径至少需要比钢筋直径大5mm！");
- 					event.preventDefault();
- 					return ;
- 				};
-
- 				if (zksd < (gjzj*14)) {
- 					myAlert("钻孔深度至少为15倍钢筋直径！");
- 					event.preventDefault();
- 					return ;	
- 				};
-
- 				var result = Math.ceil(Math.PI*(Math.pow(zkzj/10, 2)-Math.pow(gjzj/10, 2))*zksd/10*1.15*zjgs);
- 				$('#jszl').val(result);
-
- 				var smallNum = Math.ceil(result/330);
- 				var bigNum   = Math.ceil(result/500);
-				$('#330num').val(smallNum);
-				$('#500num').val(bigNum);
-
-				event.preventDefault();
- 				return;
-			});
-
-			$('#reset').bind("click", function(event){
-				$('#prompt').popup();
-
-				$('.number').each(function(){
-					var zero = 0;
- 					$(this).val(zero);
- 				}); 
- 				event.preventDefault();
-				return ;
-			});
-		});
-
-	</script>
 </head>
 
 <body>
@@ -172,12 +95,86 @@
 
 		<div data-role="footer" class="footer">
 			<p>植筋技术免费支持 | <a href="http://www.secoic.com/hilit/hilitms.htm">进口植筋胶代理</a> <br>
-				<span><a href="tel:4006018808">400-601-8808</a></span>
+				<span><a href="tel:4006018808" data-role="button">400-601-8808</a></span>
 			</p>
 		</div>
 
 	</div>
 	<!-- /page -->
+	<script src="js/jquery.js"></script>
+	<script src="js/jquery.mobile-1.2.0.min.js"></script>
+		<script type="text/javascript">
 
+		function myAlert(msg) {
+			console.log(msg);
+			$('#prompt').popup("open");
+		}
+
+		jQuery(document).ready(function($) {
+			
+			$('#submit').bind("click", function(event){
+				try 
+				{
+					$('.number').each(function(){
+ 						var current = $(this);
+ 						var num = parseFloat(current.val());
+ 						if (num < 0.1) {
+ 							myAlert("请输入正确数值！推荐：钻孔直径至少比钢筋直径大5mm，钻孔深度至少为15倍钢筋直径！");
+ 							throw "error";
+ 						};
+ 					}); 
+				} catch (err) {
+					event.preventDefault();
+					return;
+				}
+
+ 				var gjzj = parseFloat($('#gjzj').val())/2;
+ 				var zkzj = parseFloat($('#zkzj').val())/2;
+ 				var zksd = parseFloat($('#zksd').val());
+ 				var zjgs = parseInt($('#zjgs').val());
+
+ 				if (!gjzj || !zkzj || !zksd || !zjgs) {
+ 					myAlert("请输入正确数值！");
+ 					event.preventDefault();
+ 					return ;
+ 				}
+
+ 				if (zkzj < (gjzj+2)) {
+ 					myAlert("钻孔直径至少需要比钢筋直径大5mm！");
+ 					event.preventDefault();
+ 					return ;
+ 				};
+
+ 				if (zksd < (gjzj*14)) {
+ 					myAlert("钻孔深度至少为15倍钢筋直径！");
+ 					event.preventDefault();
+ 					return ;	
+ 				};
+
+ 				var result = Math.ceil(Math.PI*(Math.pow(zkzj/10, 2)-Math.pow(gjzj/10, 2))*zksd/10*1.15*zjgs);
+ 				$('#jszl').val(result);
+
+ 				var smallNum = Math.ceil(result/330);
+ 				var bigNum   = Math.ceil(result/500);
+				$('#330num').val(smallNum);
+				$('#500num').val(bigNum);
+
+				event.preventDefault();
+ 				return ;
+			});
+
+			$('#reset').bind("click", function(event){
+				$('#prompt').popup();
+
+				$('.number').each(function(){
+					var zero = 0;
+ 					$(this).val(zero);
+ 				}); 
+ 				event.preventDefault();
+				return ;
+			});
+		});
+
+	</script>
 </body>
 </html>
