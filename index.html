@@ -87,23 +87,33 @@
 					<li>钻孔直径至少比钢筋直径大5mm</li>
 					<li>钻孔深度至少为15倍钢筋直径</li>
 				</ol>
-				<br>	
-			</div>
+				<br></div>
 
 		</div>
 		<!-- /content -->
 
 		<div data-role="footer" class="footer">
-			<p>植筋技术免费支持 | <a href="http://www.secoic.com/hilit/hilitms.htm">进口植筋胶代理</a> <br>
-				<span><a href="tel:4006018808" data-role="button">400-601-8808</a></span>
+			<p>
+				植筋技术免费支持 |
+				<a href="http://www.secoic.com/hilit/hilitms.htm">进口植筋胶代理</a>
+				<br>
+				<span>
+					<a href="tel:4006018808" data-role="button">400-601-8808</a>
+				</span>
 			</p>
 		</div>
+		<!-- /footer -->
 
 	</div>
 	<!-- /page -->
+
+</body>
+
+	
 	<script src="js/jquery.js"></script>
 	<script src="js/jquery.mobile-1.2.0.min.js"></script>
-		<script type="text/javascript">
+	<script type="text/javascript" charset="utf-8" src="cordova-2.2.0.js"></script>
+	<script type="text/javascript">
 
 		function myAlert(msg) {
 			console.log(msg);
@@ -173,8 +183,13 @@
  				event.preventDefault();
 				return ;
 			});
+
+			document.addEventListener("backbutton", function(){
+				navigator.app.exitApp();
+			}, false);   
+  			
 		});
 
-	</script>
-</body>
+</script>
+
 </html>
